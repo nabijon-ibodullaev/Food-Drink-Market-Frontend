@@ -39,37 +39,118 @@
   </div>
 </div>
 
-<div class="container-fluid border">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-2 border">
-      <mat-list>
-        <h2 class="text-center text-uppercase fw-normal">Products</h2>
-        <mat-list-item>Item 1</mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-list>
+    <div class="col-md-3 mt-3">
+      <div class="sticky-top">
+        <mat-expansion-panel [expanded]="isFirst" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title
+              class="d-flex align-items-center justify-content-between panel-color"
+              ><div><i class="fas fa-apple-alt"></i> Fruits</div>
+              <i class="fa-solid fa-caret-down"></i>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let product of fruitCategory">
+              {{ product.name }} <mat-divider></mat-divider
+            ></mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mt-1" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title
+              class="d-flex align-items-center justify-content-between panel-color"
+            >
+              <div><i class="fa-solid fa-bottle-droplet"></i> Drinks</div>
+              <i class="fa-solid fa-caret-down"></i
+            ></mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item *ngFor="let product of drinkCategory"
+              >{{ product.name }} <mat-divider></mat-divider
+            ></mat-list-item>
+          </mat-list>
+        </mat-expansion-panel>
+      </div>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-9 bg-product-color">
       <div class="content">
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
           <div
             fxFlex="33.3333%"
             fxFlex.xs="100%"
             fxFlex.sm="33%"
-            *ngFor="let num of [1, 2, 3, 4, 5, 6, 7]"
+            *ngFor="let food of foodProducts"
           >
-            <mat-card class="mat-elevation-z4">
-              <img mat-card-image src="https://picsum.photos/200/150" />
-              <div class="badge bg-danger">New</div>
-              <div class="badge bg-warning">Sale</div>
-
-              <mat-card-content>
-                <mat-card-title>Mountains {{ num }}</mat-card-title>
-                <p>The Himalayas is a mountain range in Asia.</p>
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
-              </mat-card-actions>
+            <mat-card class="mat-elevation-z4 position-relative">
+              <div
+                mat-card-image
+                [style.backgroundImage]="'url(' + food.imageUrl + ')'"
+                class="bg-card"
+              ></div>
+              <h5
+                *ngIf="food.newBadge"
+                class="badge badge-new bg-warning position-absolute d-flex align-items-center justify-content-center fw-bold"
+              >
+                new
+              </h5>
+              <h5
+                *ngIf="food.saleBadge"
+                class="badge badge-sale position-absolute bg-danger d-flex align-items-center justify-content-center fw-bold"
+              >
+                Sale
+              </h5>
+              <div class="card-f">
+                <mat-card-content>
+                  <mat-card-title class="fw-bolder panel-color">{{
+                    food.name | titlecase
+                  }}</mat-card-title>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p
+                      class="text-end fw-bold fs-6"
+                      [style.text-decoration]="
+                        food.saleBadge ? 'line-through' : 'none'
+                      "
+                    >
+                      {{ food.price | currency }}
+                    </p>
+                    &nbsp;&nbsp;
+                    <p *ngIf="food.saleBadge" class="fs-4 text-danger">
+                      {{ food.newPrice | currency }}
+                    </p>
+                  </div>
+                </mat-card-content>
+                <mat-card-actions
+                  class="d-flex align-items-center justify-content-around pb-3"
+                >
+                  <div
+                    class="btn-group w-50"
+                    role="group"
+                    aria-label="Basic example"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-secondary btn-sm px-2 btn-bg-color"
+                    >
+                      -
+                    </button>
+                    <button type="button" class="btn btn-light btn-sm px-3">
+                      1
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary btn-sm px-2 btn-bg-color"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </mat-card-actions>
+              </div>
             </mat-card>
           </div>
         </div>

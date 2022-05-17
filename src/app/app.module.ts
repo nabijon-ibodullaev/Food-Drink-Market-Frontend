@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductService } from './Services/product.service';
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent],
   imports: [
@@ -19,8 +21,9 @@ import { FooterComponent } from './footer/footer.component';
     AngularMaterialModule,
     CarouselModule,
     FlexLayoutModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
