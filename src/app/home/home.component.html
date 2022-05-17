@@ -1,1 +1,40 @@
-<p>home works!</p>
+<div
+  class="px-4 py-5 text-center bg-color-home d-flex align-items-center justify-content-center"
+>
+  <div class="col-lg-8 mx-auto">
+    <h1 class="head-h1">Groceries Delivered in 90 Minute</h1>
+    <div>
+      <p class="py-3 fw-bold">
+        Get your healthy foods & snacks delivered at your doorsteps all day
+        everyday
+      </p>
+    </div>
+
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control py-2 px-3"
+        placeholder="Search your product from here"
+      />
+      <span class="btn btn-bg-color py-2 px-3" id="basic-addon1">
+        <i class="fas fa-search"></i> Search</span
+      >
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 py-4">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let slide of slidesStore">
+          <ng-template carouselSlide id="{{ slide.id }}">
+            <div class="px-2 py-1">
+              <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title" />
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</div>

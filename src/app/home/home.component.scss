@@ -1,0 +1,24 @@
+.bg-color-home {
+  background-color: #f8f9fa;
+  background: url(../../assets/Home/top-view-vegetables-fruits-bag.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  height: 550px;
+}
+.head-h1 {
+  font-size: 50px;
+  font-weight: 800;
+}
+
+.btn-bg-color {
+  background-color: #00c58a;
+  color: #fff;
+}
+.form-control:focus {
+  box-shadow: none;
+  border-color: #00c58a;
+}
+.owl-carousel.owl-drag .owl-item {
+  padding: 10px !important;
+}
