@@ -9,11 +9,14 @@ export class HomeComponent implements OnInit {
   customOptions: OwlOptions = {
     loop: false,
     mouseDrag: true,
-    touchDrag: false,
+    touchDrag: true,
     pullDrag: true,
     dots: false,
     navSpeed: 700,
-    navText: ['', ''],
+    navText: [
+      '<i class="fa-solid fa-chevron-left"></i>',
+      '<i class="fa-solid fa-chevron-right"></i>',
+    ],
     responsive: {
       0: {
         items: 1,

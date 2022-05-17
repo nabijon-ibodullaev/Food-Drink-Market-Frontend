@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<div class="container-fluid">
+<div class="container-fluid border">
   <div class="row">
     <div class="col-md-12 py-4">
       <owl-carousel-o [options]="customOptions">
@@ -35,6 +35,45 @@
           </ng-template>
         </ng-container>
       </owl-carousel-o>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid border">
+  <div class="row">
+    <div class="col-md-2 border">
+      <mat-list>
+        <h2 class="text-center text-uppercase fw-normal">Products</h2>
+        <mat-list-item>Item 1</mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </div>
+    <div class="col-md-10">
+      <div class="content">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div
+            fxFlex="33.3333%"
+            fxFlex.xs="100%"
+            fxFlex.sm="33%"
+            *ngFor="let num of [1, 2, 3, 4, 5, 6, 7]"
+          >
+            <mat-card class="mat-elevation-z4">
+              <img mat-card-image src="https://picsum.photos/200/150" />
+              <div class="badge bg-danger">New</div>
+              <div class="badge bg-warning">Sale</div>
+
+              <mat-card-content>
+                <mat-card-title>Mountains {{ num }}</mat-card-title>
+                <p>The Himalayas is a mountain range in Asia.</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
