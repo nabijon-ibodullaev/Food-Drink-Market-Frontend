@@ -5,23 +5,28 @@
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
+      data-bs-target="#dropdown"
+      aria-controls="dropdown"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="dropdown">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <select class="form-select">
-          <option selected>Open this select menu</option>
+          <option selected disabled>Open this select menu</option>
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>
         </select>
       </ul>
       <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link fs-6 bag-icon"
+            ><i class="fas fa-shopping-bag"></i> (0)</a
+          >
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Shops</a>
         </li>

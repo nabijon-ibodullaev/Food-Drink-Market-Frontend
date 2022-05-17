@@ -7,26 +7,20 @@
     color: #00c58a;
   }
 }
+.bag-icon {
+  color: #00c58a !important;
+}
 .form-select {
   border-color: #ebedf0;
   color: #00c58a;
 }
-option {
-  color: #656e7a;
-}
-option:hover {
-  color: #00c58a;
-  background-color: #fff;
-}
-option:active {
-  color: #00c58a;
-  background-color: #fff;
-}
+
 .form-select:focus {
   border-color: #ebedf0;
   outline: 0;
   box-shadow: none;
 }
+
 .nav-item {
   padding: 0 10px;
   .nav-link {
