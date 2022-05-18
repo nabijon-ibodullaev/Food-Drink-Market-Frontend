@@ -10,6 +10,12 @@ import { ProductCategories } from '../Models/product-categories';
 export class ProductService {
   constructor(private http: HttpClient) {}
 
+  getAllCategory(): Observable<ProductCategories[]> {
+    return this.http.get<ProductCategories[]>(
+      'http://localhost:3000/api/categories'
+    );
+  }
+
   getFruitCategories(): Observable<ProductCategories[]> {
     return this.http.get<ProductCategories[]>(
       'http://localhost:3000/api/food-categories'

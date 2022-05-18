@@ -12,8 +12,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from './Services/product.service';
+import { ShopsComponent } from './Component/shops/shops.component';
+import { FAQComponent } from './Component/faq/faq.component';
+import { LoginComponent } from './Component/login/login.component';
+import { SignUpComponent } from './Component/sign-up/sign-up.component';
+import { ContactComponent } from './Component/contact/contact.component';
+import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent],
+  declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent, ShopsComponent, FAQComponent, LoginComponent, SignUpComponent, ContactComponent, AdminDashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
