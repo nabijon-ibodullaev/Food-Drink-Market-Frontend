@@ -76,7 +76,85 @@
     </div>
     <div class="container-fluid bg-theme py-3">
       <div class="row">
-        <div class="col-md-8 offset-md-2 px-sm-2">
+        <div class="col-lg-3 p-2">
+          <mat-card class="cart-top">
+            <div class="cart-chart">
+              <h1 class="fw-bold text-success text-center">TOTAL USERS</h1>
+              <div class="d-flex align-items-center justify-content-between">
+                <img
+                  src="../../../assets/admin/man.png"
+                  class="img-fluid"
+                  width="100px"
+                  alt="users"
+                />
+                &nbsp;&nbsp;
+                <h1 class="fw-bold text-card opacity-75 fs-1 text-danger">
+                  {{ TOTAL_USERS }}
+                </h1>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div class="col-lg-3 p-2">
+          <mat-card class="cart-top">
+            <div class="cart-chart">
+              <h1 class="fw-bold text-success text-center">ACTIVE USERS</h1>
+              <div class="d-flex align-items-center justify-content-between">
+                <img
+                  src="../../../assets/admin/testimonials.png"
+                  class="img-fluid"
+                  width="100px"
+                  alt=""
+                />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <h1 class="fw-bold text-card text-danger fs-1">3</h1>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div class="col-lg-3 p-2">
+          <mat-card class="cart-top">
+            <div class="cart-chart">
+              <h1 class="fw-bold text-success text-center">PASSIVE USERS</h1>
+              <div class="d-flex align-items-center justify-content-between">
+                <img
+                  src="../../../assets/admin/passive-candidate.png"
+                  class="img-fluid"
+                  width="100px"
+                  alt=""
+                />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <h1 class="fw-bold text-card text-danger fs-1">1</h1>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div class="col-lg-3 p-2">
+          <div>
+            <mat-card class="cart-top">
+              <div class="cart-chart">
+                <h1 class="fw-bold text-success text-center">TOTAL VISIT</h1>
+                <div class="d-flex align-items-center justify-content-between">
+                  <img
+                    src="../../../assets/admin/visitor.png"
+                    class="img-fluid"
+                    width="100px"
+                    alt=""
+                  />
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <h1 class="fw-bold text-card text-danger fs-1">10</h1>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div class="p-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid bg-theme py-3">
+      <div class="row">
+        <div class="col-md-12 px-sm-2">
           <h2 class="text-center text-uppercase text-danger table-responsive">
             All Users
           </h2>
@@ -109,6 +187,12 @@
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
               <td mat-cell *matCellDef="let note">{{ note.email }}</td>
             </ng-container>
+            <ng-container matColumnDef="password">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                password
+              </th>
+              <td mat-cell *matCellDef="let note">{{ note.password }}</td>
+            </ng-container>
             <ng-container matColumnDef="isAdmin">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>isAdmin</th>
               <td mat-cell *matCellDef="let note">{{ note.isAdmin }}</td>
@@ -125,7 +209,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
           <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 100]"
+            [pageSizeOptions]="[15, 25, 35, 55]"
             aria-label="Select page of users"
           ></mat-paginator>
         </div>

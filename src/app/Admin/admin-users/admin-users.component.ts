@@ -14,21 +14,29 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
   opened: boolean = false;
   users!: User[];
 
-  displayedColumns: string[] = ['_id', 'name', 'email', 'isAdmin', 'regDate'];
+  displayedColumns: string[] = [
+    '_id',
+    'name',
+    'email',
+    'password',
+    'isAdmin',
+    'regDate',
+  ];
   dataSource!: MatTableDataSource<User>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  TOTAL_USERS: any;
   constructor(private UsersService: UsersService) {}
 
   ngOnInit() {
     this.UsersService.getAllUsers().subscribe((data) => {
       this.dataSource = new MatTableDataSource<User>(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.TOTAL_USERS = data.length;
     });
   }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() {}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
