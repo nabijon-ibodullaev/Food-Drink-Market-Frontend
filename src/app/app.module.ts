@@ -17,9 +17,41 @@ import { FAQComponent } from './Component/faq/faq.component';
 import { LoginComponent } from './Component/login/login.component';
 import { SignUpComponent } from './Component/sign-up/sign-up.component';
 import { ContactComponent } from './Component/contact/contact.component';
-import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
+import { AdminComponent } from './Admin/admin/admin.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { AdminProductsComponent } from './Admin/admin-products/admin-products.component';
+import { AdminUsersComponent } from './Admin/admin-users/admin-users.component';
+import { AdminBannerComponent } from './Admin/admin-banner/admin-banner.component';
+import { AdminSaleProductsComponent } from './Admin/admin-sale-products/admin-sale-products.component';
+import { AdminNewsComponent } from './Admin/admin-news/admin-news.component';
+import { AdminBlogComponent } from './Admin/admin-blog/admin-blog.component';
+import { UsersService } from './Admin/Services/users.service';
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent, ShopsComponent, FAQComponent, LoginComponent, SignUpComponent, ContactComponent, AdminDashboardComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    FooterComponent,
+    ShopsComponent,
+    FAQComponent,
+    LoginComponent,
+    SignUpComponent,
+    ContactComponent,
+    AdminComponent,
+    AdminProductsComponent,
+    AdminUsersComponent,
+    AdminBannerComponent,
+    AdminSaleProductsComponent,
+    AdminNewsComponent,
+    AdminBlogComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,8 +60,19 @@ import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard
     CarouselModule,
     FlexLayoutModule,
     HttpClientModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
-  providers: [ProductService],
+  providers: [ProductService, UsersService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

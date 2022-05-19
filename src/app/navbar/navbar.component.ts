@@ -9,6 +9,10 @@ import { ProductCategories } from '../Models/product-categories';
 })
 export class NavbarComponent implements OnInit {
   allCategory: ProductCategories[] = [];
+  ShowNavbar: boolean = false;
+  showNavbar() {
+    this.ShowNavbar = !this.ShowNavbar;
+  }
   constructor(private service: ProductService) {}
 
   ngOnInit() {
