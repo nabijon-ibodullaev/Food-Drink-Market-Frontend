@@ -16,6 +16,12 @@ export class ProductService {
     );
   }
 
+  getAllFruitAndDrinkCategory(): Observable<ProductCategories[]> {
+    return this.http.get<ProductCategories[]>(
+      'http://localhost:3000/api/all-categories'
+    );
+  }
+
   getFruitCategories(): Observable<ProductCategories[]> {
     return this.http.get<ProductCategories[]>(
       'http://localhost:3000/api/food-categories'
@@ -29,5 +35,9 @@ export class ProductService {
 
   getFoodProducts(): Observable<FoodProduct[]> {
     return this.http.get<FoodProduct[]>('http://localhost:3000/api/foods');
+  }
+
+  newProduct(food: FoodProduct): Observable<FoodProduct> {
+    return this.http.post<FoodProduct>('http://localhost:3000/api/foods', food);
   }
 }

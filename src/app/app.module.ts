@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './Services/product.service';
 import { ShopsComponent } from './Component/shops/shops.component';
 import { FAQComponent } from './Component/faq/faq.component';
@@ -33,6 +33,11 @@ import { AdminSaleProductsComponent } from './Admin/admin-sale-products/admin-sa
 import { AdminNewsComponent } from './Admin/admin-news/admin-news.component';
 import { AdminBlogComponent } from './Admin/admin-blog/admin-blog.component';
 import { UsersService } from './Admin/Services/users.service';
+import { AuthInterceptor } from './Services/auth-interceptor';
+import { AuthGuard } from './Services/auth-guard.service';
+import { LogOutComponent } from './Component/log-out/log-out.component';
+import { AddToCardService } from './Services/add-to-card.service';
+import { AdminService } from './Services/admin.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +56,7 @@ import { UsersService } from './Admin/Services/users.service';
     AdminSaleProductsComponent,
     AdminNewsComponent,
     AdminBlogComponent,
+    LogOutComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,8 +77,21 @@ import { UsersService } from './Admin/Services/users.service';
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    ReactiveFormsModule,
+    FormsModule,
   ],
-  providers: [ProductService, UsersService],
+  providers: [
+    ProductService,
+    UsersService,
+    AddToCardService,
+    AdminService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,6 +4,8 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { ProductService } from '../../Services/product.service';
 import { ProductCategories } from 'src/app/Models/product-categories';
 import { EChartsOption } from 'echarts';
+import { AdminService } from 'src/app/Services/admin.service';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -11,6 +13,8 @@ import { EChartsOption } from 'echarts';
 })
 export class AdminComponent implements OnInit {
   opened: boolean = false;
+  _TOTAL_AMOUNT: any;
+  _TOTAL_USERS: any;
   /** Based on the screen size, switch from standard to one column per row */
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
@@ -34,12 +38,20 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private service: ProductService
+    private service: ProductService,
+    private adminService: AdminService
   ) {}
   category: ProductCategories[] = [];
   ngOnInit() {
     this.service.getAllCategory().subscribe((data) => {
       this.category = data;
+    });
+
+    this.adminService.getFoodAmount().subscribe((data) => {
+      this._TOTAL_AMOUNT = data[0].TotalAmount;
+    });
+    this.adminService.getAllUsers().subscribe((data) => {
+      this._TOTAL_USERS = data.length;
     });
   }
 

@@ -1,11 +1,11 @@
 export class FoodProduct {
-  _id!: string;
+  _id!: any;
   name!: string;
   description!: string;
   imageUrl!: string;
   price!: number;
   rating!: number;
-  categoryName!: Array<any>;
+  categoryName!: string;
   newBadge!: boolean;
   saleBadge!: boolean;
   oldPrice!: number;

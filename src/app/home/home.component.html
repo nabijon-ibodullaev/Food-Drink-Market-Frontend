@@ -79,8 +79,8 @@
       <div class="content">
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
           <div
-            fxFlex="33.3333%"
-            fxFlex.xs="100%"
+            fxFlex="25%"
+            fxFlex.xs="50%"
             fxFlex.sm="33%"
             *ngFor="let food of foodProducts"
           >
@@ -104,17 +104,18 @@
               </h5>
               <div class="card-f">
                 <mat-card-content>
-                  <mat-card-title class="fw-bolder panel-color">{{
-                    food.name | titlecase
-                  }}</mat-card-title>
+                  <mat-card-title
+                    class="fw-bolder panel-color cart-title pt-2 fs-5 text-center"
+                    >{{ food.name | uppercase }}</mat-card-title
+                  >
                   <div class="d-flex align-items-center justify-content-center">
                     <p
-                      class="text-end fw-bold fs-6"
+                      class="text-end fw-bold fs-6 pt-2"
                       [style.text-decoration]="
                         food.saleBadge ? 'line-through' : 'none'
                       "
                     >
-                      {{ food.price | currency }}
+                      {{ food.price | currency }} {{ " /1 kg" }}
                     </p>
                     &nbsp;&nbsp;
                     <p *ngIf="food.saleBadge" class="fs-4 text-danger">
@@ -123,29 +124,8 @@
                   </div>
                 </mat-card-content>
                 <mat-card-actions
-                  class="d-flex align-items-center justify-content-around pb-3"
+                  class="d-flex align-items-center justify-content-around"
                 >
-                  <div
-                    class="btn-group w-50"
-                    role="group"
-                    aria-label="Basic example"
-                  >
-                    <button
-                      type="button"
-                      class="btn btn-secondary btn-sm px-2 btn-bg-color"
-                    >
-                      -
-                    </button>
-                    <button type="button" class="btn btn-light btn-sm px-3">
-                      1
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-secondary btn-sm px-2 btn-bg-color"
-                    >
-                      +
-                    </button>
-                  </div>
                   <button class="btn btn-danger btn-sm">
                     <i class="fas fa-shopping-cart"></i>
                   </button>

@@ -27,9 +27,51 @@
       </ul>
       <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link fs-6 bag-icon"
-            ><i class="fas fa-shopping-bag"></i> (0)</a
-          >
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle"
+              type="button"
+              (click)="addCardClick()"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fas fa-shopping-bag bag-icon"></i> (1)
+            </button>
+            <ul
+              [class.show]="showShoppingCard"
+              class="dropdown-menu rounded-1"
+              aria-labelledby="dropdownMenuButton1"
+            >
+              <div class="shoppingCard">
+                <div class="d-flex align-items-center">
+                  <div class="flex-shrink-0">
+                    <img
+                      src="https://freepngimg.com/thumb/papaya/176229-papaya-green-free-transparent-image-hd-thumb.png"
+                      alt=""
+                      width="90px"
+                    />
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <div class="input-group mb-3">
+                      <input
+                        type="number"
+                        class="form-control"
+                        aria-label="Price"
+                        placeholder="1"
+                        value="1"
+                        width="50px"
+                        aria-describedby="basic-addon1"
+                      />
+                      <span class="input-group-text" id="basic-addon1"
+                        >$34.32</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a
@@ -59,13 +101,13 @@
           >
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/login"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Login</a
-          >
+          <div *ngIf="isUserLoggedIn; else isLogOut">
+            <a class="nav-link" routerLink="/logout">Logout</a>
+          </div>
+
+          <ng-template #isLogOut>
+            <a class="nav-link" routerLink="/login">Login</a>
+          </ng-template>
         </li>
         <li class="nav-item">
           <a class="btn btn-danger text-white" routerLink="/admin">Admin</a>

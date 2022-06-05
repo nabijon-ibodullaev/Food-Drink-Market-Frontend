@@ -14,14 +14,7 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
   opened: boolean = false;
   users!: User[];
 
-  displayedColumns: string[] = [
-    '_id',
-    'name',
-    'email',
-    'password',
-    'isAdmin',
-    'regDate',
-  ];
+  displayedColumns: string[] = ['_id', 'name', 'email', 'isAdmin', 'regDate'];
   dataSource!: MatTableDataSource<User>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

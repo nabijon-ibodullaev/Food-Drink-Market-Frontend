@@ -90,7 +90,7 @@
           <div class="p-1">
             <mat-card class="cart-top">
               <div class="cart-chart">
-                <h1 class="fw-bold text-success">TOTAL VISIT</h1>
+                <h1 class="fw-bold text-success">TOTAL USERS</h1>
                 <div class="d-flex align-items-center justify-content-between">
                   <img
                     src="../../../assets/admin/bar-chart.png"
@@ -99,7 +99,9 @@
                     alt=""
                   />
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <h1 class="fw-bold text-card opacity-75">560</h1>
+                  <h1 class="fw-bold text-card opacity-75">
+                    {{ _TOTAL_USERS }}
+                  </h1>
                 </div>
               </div>
             </mat-card>
@@ -107,7 +109,7 @@
           <div class="p-1">
             <mat-card class="cart-top">
               <div class="cart-chart">
-                <h1 class="fw-bold text-success">TOTAL BUDGET</h1>
+                <h1 class="fw-bold text-success">FOODS AMOUNT</h1>
                 <div class="d-flex align-items-center justify-content-between">
                   <img
                     src="../../../assets/admin/budget.png"
@@ -116,7 +118,9 @@
                     alt=""
                   />
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <h1 class="fw-bold text-card opacity-75 text-danger">$36k</h1>
+                  <h1 class="fw-bold text-card opacity-75 text-danger">
+                    {{ _TOTAL_AMOUNT | currency: "USD" }}
+                  </h1>
                 </div>
               </div>
             </mat-card>

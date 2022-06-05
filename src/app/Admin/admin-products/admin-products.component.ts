@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { FoodProduct } from 'src/app/Models/food-product';
 import { ProductService } from '../../Services/product.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-products',
@@ -15,6 +17,8 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   TOTAL_PRODUCTS!: number;
   selectedValue!: string;
   selectCategory: any;
+  isChecked!: boolean;
+  isNew!: boolean;
 
   displayedColumns: string[] = [
     'imageUrl',
@@ -27,12 +31,13 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
     'saleBadge',
     'oldPrice',
     'newPrice',
+    'total',
     'edit',
   ];
   dataSource!: MatTableDataSource<FoodProduct>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private service: ProductService) {}
+  constructor(private service: ProductService, private http: HttpClient) {}
 
   ngOnInit() {
     this.service.getFoodProducts().subscribe((data) => {
@@ -42,9 +47,10 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
       this.TOTAL_PRODUCTS = data.length;
     });
 
-    this.service
-      .getAllCategory()
-      .subscribe((data) => (this.selectCategory = data));
+    this.service.getAllFruitAndDrinkCategory().subscribe((data) => {
+      this.selectCategory = data;
+      console.log(data);
+    });
   }
   ngAfterViewInit() {}
 
@@ -61,12 +67,21 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
     console.log(product);
   }
   deleteProduct(product: FoodProduct) {
-    console.log(product);
+    console.log(product._id);
+    this.http
+      .delete('http://localhost:3000/api/foods' + '/' + product._id)
+      .subscribe((data) => {
+        console.log(data);
+      });
+    window.location.reload();
   }
 
-  foods: any[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
+  onSubmitProduct(form: NgForm) {
+    console.log(form.value);
+    this.service.newProduct(form.value).subscribe((data) => {
+      console.log(data);
+    });
+    form.resetForm();
+    window.location.reload();
+  }
 }
