@@ -80,3 +80,18 @@ h2 {
 .mat-card {
   height: 275px;
 }
+.addCart:hover {
+  background-color: #00c58a;
+  border: 1px solid #00c58a;
+  transition: background 0.4s ease-in;
+}
+.mat-list-item {
+  cursor: pointer;
+}
+.mat-list-item:hover {
+  background-color: #f8f9fa;
+}
+.mat-list-item:hover:active {
+  background-color: #ff6f61;
+  color: #fff;
+}

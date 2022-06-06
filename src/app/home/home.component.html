@@ -52,9 +52,46 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <mat-list>
-            <mat-list-item *ngFor="let product of fruitCategory">
-              {{ product.name }} <mat-divider></mat-divider
-            ></mat-list-item>
+            <mat-list-item
+              (click)="allProducts()"
+              class="fw-bold text-uppercase"
+              >All Products</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item (click)="Fruits()" class="fw-normal text-uppercase"
+              >Fruits</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item
+              (click)="Vegetables()"
+              class="fw-normal text-uppercase"
+              >Vegetables</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item
+              (click)="MeatAndPoultry()"
+              class="fw-normal text-uppercase"
+              >Meat and poultry</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item (click)="Fish()" class="fw-normal text-uppercase"
+              >Fish and seafood</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item (click)="Grains()" class="fw-normal text-uppercase"
+              >Grains, nuts and seeds</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item (click)="Eggs()" class="fw-normal text-uppercase"
+              >Eggs</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item
+              (click)="DairyFoods()"
+              class="fw-normal text-uppercase"
+              >Dairy Foods</mat-list-item
+            >
+            <mat-divider></mat-divider>
           </mat-list>
         </mat-expansion-panel>
 
@@ -68,9 +105,26 @@
             ></mat-panel-title>
           </mat-expansion-panel-header>
           <mat-list>
-            <mat-list-item *ngFor="let product of drinkCategory"
-              >{{ product.name }} <mat-divider></mat-divider
-            ></mat-list-item>
+            <mat-list-item class="fw-bold text-uppercase"
+              >All Drinks</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item class="fw-normal text-uppercase"
+              >Alcoholic drinks</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item class="fw-normal text-uppercase"
+              >Non-alcoholic drinks</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item class="fw-normal text-uppercase"
+              >Hot drinks</mat-list-item
+            >
+            <mat-divider></mat-divider>
+            <mat-list-item class="fw-normal text-uppercase"
+              >Juice and plant drinks</mat-list-item
+            >
+            <mat-divider></mat-divider>
           </mat-list>
         </mat-expansion-panel>
       </div>
@@ -115,7 +169,7 @@
                         food.saleBadge ? 'line-through' : 'none'
                       "
                     >
-                      {{ food.price | currency }} {{ " /1 kg" }}
+                      Price: {{ food.price | currency }}
                     </p>
                     &nbsp;&nbsp;
                     <p *ngIf="food.saleBadge" class="fs-4 text-danger">
@@ -126,8 +180,10 @@
                 <mat-card-actions
                   class="d-flex align-items-center justify-content-around"
                 >
-                  <button class="btn btn-danger btn-sm">
-                    <i class="fas fa-shopping-cart"></i>
+                  <button
+                    class="btn btn-danger btn-sm text-uppercase fw-bold addCart"
+                  >
+                    Add to Cart <i class="fas fa-shopping-cart"></i>
                   </button>
                 </mat-card-actions>
               </div>

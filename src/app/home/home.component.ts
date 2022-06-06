@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit {
   fruitCategory: ProductCategories[] = [];
   drinkCategory: ProductCategories[] = [];
   foodProducts: FoodProduct[] = [];
+  EMPTY_MESSAGE: string = '';
+  IS_ACTIVE_MENU: boolean = false;
   items = [];
   _ADD_TO_CARD: number = 1;
   isFirst = true;
@@ -37,10 +39,6 @@ export class HomeComponent implements OnInit {
 
     this.product.getDrinkCategories().subscribe((data) => {
       this.drinkCategory = data;
-    });
-
-    this.product.getFoodProducts().subscribe((data) => {
-      this.foodProducts = data;
     });
   }
   slidesStore = [
@@ -109,5 +107,49 @@ export class HomeComponent implements OnInit {
     } else {
       this._ADD_TO_CARD--;
     }
+  }
+
+  allProducts() {
+    this.product.getFoodProducts().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  Fruits() {
+    this.product.getOnlyFruits().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  Vegetables() {
+    this.product.getOnlyVegetables().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  MeatAndPoultry() {
+    this.product.getOnlyMeat().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  Fish() {
+    this.product.getOnlyFish().subscribe((data) => {
+      this.foodProducts = data;
+      if (data.length <= 0) {
+        this.EMPTY_MESSAGE = 'Empty Products';
+      }
+    });
+  }
+  Grains() {
+    this.product.getOnlyGrains().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  Eggs() {
+    this.product.getOnlyEggs().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  DairyFoods() {
+    this.product.getOnlyDairy().subscribe((data) => {
+      this.foodProducts = data;
+    });
   }
 }
