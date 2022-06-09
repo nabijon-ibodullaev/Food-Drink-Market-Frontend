@@ -1,5 +1,9 @@
 # Frontend
 
+<video width="320" height="240" controls>
+  <source src="SuperMarket.mp4" type="video/mp4">
+</video>
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.4.
 
 ## Development server
