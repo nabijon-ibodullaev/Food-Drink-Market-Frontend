@@ -19,6 +19,9 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   selectCategory: any;
   isChecked!: boolean;
   isNew!: boolean;
+  showUpdateButton: boolean = false;
+  hideSaveButton: boolean = true;
+  TITLE_PRODUCT = 'CREATE NEW PRODUCT';
 
   displayedColumns: string[] = [
     'imageUrl',
@@ -49,7 +52,6 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
 
     this.service.getAllFruitAndDrinkCategory().subscribe((data) => {
       this.selectCategory = data;
-      console.log(data);
     });
   }
   ngAfterViewInit() {}
@@ -63,11 +65,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  productEdit(product: FoodProduct) {
-    console.log(product);
-  }
   deleteProduct(product: FoodProduct) {
-    console.log(product._id);
     this.http
       .delete('http://localhost:3000/api/foods' + '/' + product._id)
       .subscribe((data) => {
@@ -77,11 +75,58 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitProduct(form: NgForm) {
-    console.log(form.value);
+    // console.log(form.value);
     this.service.newProduct(form.value).subscribe((data) => {
       console.log(data);
     });
     form.resetForm();
     window.location.reload();
+  }
+  resetForm(form: NgForm) {
+    form.resetForm();
+  }
+
+  productId?: string;
+  productName?: string;
+  productImageUrl?: string;
+  productPrice!: number;
+  productTotal!: number;
+  productCategory: any;
+  productDescription: string = '';
+  productBadgeNew: any;
+  productBadgeSale: any;
+  productBadgeSalePrice!: number;
+
+  productEdit(product: FoodProduct) {
+    this.hideSaveButton = false;
+    this.showUpdateButton = true;
+    this.productId = product._id;
+    this.productName = product.name;
+    this.productImageUrl = product.imageUrl;
+    this.productPrice = product.price;
+    this.productTotal = product.total;
+    this.productCategory = product.categoryName;
+    this.productDescription = product.description;
+    this.productBadgeNew = product.newBadge;
+    this.productBadgeSale = product.saleBadge;
+    this.productBadgeSalePrice = product.newPrice;
+    this.TITLE_PRODUCT = 'UPDATE PRODUCT';
+  }
+  updateProduct(product: NgForm) {
+    this.hideSaveButton = true;
+    this.showUpdateButton = false;
+    this.service
+      .updateProduct(product.value)
+      .subscribe((res) => console.log(res));
+
+    this.TITLE_PRODUCT = 'CREATE NEW PRODUCT';
+    product.resetForm();
+    window.location.reload();
+  }
+  Reset(form: NgForm) {
+    this.hideSaveButton = true;
+    this.showUpdateButton = false;
+    form.resetForm();
+    this.TITLE_PRODUCT = 'CREATE NEW PRODUCT';
   }
 }

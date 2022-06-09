@@ -6,8 +6,10 @@ export class FoodProduct {
   price!: number;
   rating!: number;
   categoryName!: string;
+  qtyTotal!: number;
   newBadge!: boolean;
   saleBadge!: boolean;
   oldPrice!: number;
   newPrice!: number;
+  total!: number;
 }

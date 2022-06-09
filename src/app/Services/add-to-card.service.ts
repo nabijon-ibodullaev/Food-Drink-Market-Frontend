@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { FoodProduct } from '../Models/food-product';
 
 @Injectable({
@@ -6,39 +7,42 @@ import { FoodProduct } from '../Models/food-product';
 })
 export class AddToCardService {
   constructor() {}
-  items: any[] = [];
+  products: FoodProduct[] = [];
+  public productList = new BehaviorSubject<any>([]);
 
-  addToCart(addedItem: string[]) {
-    this.items.push(addedItem);
-
-    this.saveCart();
+  getProducts() {
+    return this.productList.asObservable();
   }
-  getItems() {
-    return this.items;
-  }
-  loadCart(): void {
-    this.items = JSON.parse(localStorage.getItem('cart_items')!);
-  }
-  saveCart(): void {
-    localStorage.setItem('cart_items', JSON.stringify(this.items));
+  setProduct(product: any) {
+    this.products.push(...product);
+    this.productList.next(product);
   }
 
-  clearCart(items: any) {
-    this.items = [];
-
-    localStorage.removeItem('cart_items');
+  addtoCart(product: any) {
+    this.products.push(product);
+    this.productList.next(this.products);
+    this.getTotalPrice();
+    localStorage.setItem('cart', JSON.stringify(this.products));
   }
 
-  removeItem(item: FoodProduct) {
-    const index = this.items.findIndex((o: FoodProduct) => o._id === item._id);
-
-    if (index > -1) {
-      this.items.splice(index, 1);
-      this.saveCart();
-    }
+  getTotalPrice(): number {
+    let grandTotal = 0;
+    this.products.map((a: any) => {
+      grandTotal += a.price;
+    });
+    return grandTotal;
+  }
+  removeCardItem(product: any) {
+    this.products.map((a: any, index: any) => {
+      if (product._id === a._id) {
+        this.products.splice(index, 1);
+        this.getTotalPrice();
+      }
+    });
   }
 
-  itemInCart(item: FoodProduct): boolean {
-    return this.items.findIndex((o: FoodProduct) => o._id === item._id) > -1;
+  removeAllCart() {
+    this.products = [];
+    this.productList.next(this.products);
   }
 }

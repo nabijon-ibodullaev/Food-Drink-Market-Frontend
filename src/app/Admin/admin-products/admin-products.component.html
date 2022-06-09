@@ -82,7 +82,7 @@
               <h1 class="fw-bold text-success text-center">TOTAL PRODUCTS</h1>
               <div class="d-flex align-items-center justify-content-between">
                 <img
-                  src="../../../assets/admin/product.png"
+                  src="../../../assets/admin/tote-bag.png"
                   class="img-fluid opacity-75"
                   width="100px"
                   alt=""
@@ -101,7 +101,7 @@
               <h1 class="fw-bold text-success text-center">TOTAL PRICE</h1>
               <div class="d-flex align-items-center justify-content-between">
                 <img
-                  src="../../../assets/admin/money.png"
+                  src="../../../assets/admin/stack-of-coins.png"
                   class="img-fluid opacity-75"
                   width="100px"
                   alt=""
@@ -120,7 +120,7 @@
               <h1 class="fw-bold text-success text-center">TOTAL BUDGET</h1>
               <div class="d-flex align-items-center justify-content-between">
                 <img
-                  src="../../../assets/admin/budget.png"
+                  src="../../../assets/admin/analytics.png"
                   class="img-fluid opacity-75"
                   width="100px"
                   alt=""
@@ -140,7 +140,7 @@
                 <h1 class="fw-bold text-success text-center">TOTAL VISIT</h1>
                 <div class="d-flex align-items-center justify-content-between">
                   <img
-                    src="../../../assets/admin/bar-chart.png"
+                    src="../../../assets/admin/growth-chart.png"
                     class="img-fluid opacity-75"
                     width="100px"
                     alt=""
@@ -161,7 +161,7 @@
       <div class="row">
         <div class="col-md-8 bg-white py-3 px-2">
           <h1 class="text-danger text-uppercase text-center fw-bold">
-            Create New Product
+            {{ TITLE_PRODUCT }}
           </h1>
 
           <form
@@ -169,6 +169,15 @@
             (ngSubmit)="onSubmitProduct(form)"
             class="example-form"
           >
+            <input
+              type="hidden"
+              ngModel
+              #_id="ngModel"
+              name="_id"
+              value="Apple"
+              [(ngModel)]="productId"
+              [ngModelOptions]="{ standalone: false }"
+            />
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>Product name</mat-label>
               <input
@@ -179,6 +188,7 @@
                 #name="ngModel"
                 name="name"
                 value="Apple"
+                [(ngModel)]="productName"
                 [ngModelOptions]="{ standalone: false }"
                 maxlength="18"
               />
@@ -193,9 +203,20 @@
                 required
                 #imageUrl="ngModel"
                 name="imageUrl"
+                [(ngModel)]="productImageUrl"
                 [ngModelOptions]="{ standalone: false }"
               />
             </mat-form-field>
+            <!--
+            <input
+              type="file"
+              ngModel
+              required
+              #file="ngModel"
+              name="file"
+              [ngModelOptions]="{ standalone: false }"
+            /> -->
+
             <div class="d-sm-flex align-items-center justify-content-center">
               <mat-form-field
                 class="example-full-width mx-1 pb-1"
@@ -209,6 +230,7 @@
                   required
                   #price="ngModel"
                   name="price"
+                  [(ngModel)]="productPrice"
                   [ngModelOptions]="{ standalone: false }"
                 />
                 <mat-hint align="end"
@@ -227,6 +249,7 @@
                   required
                   #total="ngModel"
                   name="total"
+                  [(ngModel)]="productTotal"
                   [ngModelOptions]="{ standalone: false }"
                 />
                 <mat-hint align="end">Here write total in base (kg)</mat-hint>
@@ -236,7 +259,12 @@
                 appearance="fill"
               >
                 <mat-label>Category</mat-label>
-                <mat-select ngModel #categoryName="ngModel" name="categoryName">
+                <mat-select
+                  ngModel
+                  #categoryName="ngModel"
+                  [(ngModel)]="productCategory"
+                  name="categoryName"
+                >
                   <mat-option
                     *ngFor="let category of selectCategory"
                     [value]="category.name"
@@ -257,6 +285,8 @@
                 name="description"
                 placeholder="Ex. It makes me feel..."
                 maxlength="1000"
+                required
+                [(ngModel)]="productDescription"
               ></textarea>
               <mat-hint align="end"
                 >{{ description.value?.length || 0 }}/1000</mat-hint
@@ -264,11 +294,12 @@
             </mat-form-field>
 
             <mat-checkbox
+              name="newBadge"
               ngModel
               #isNew="ngModel"
-              name="new Product"
-              [ngModelOptions]="{ standalone: false }"
               class="example-margin fw-bold"
+              [ngModelOptions]="{ standalone: false }"
+              [(ngModel)]="productBadgeNew"
               >New Product</mat-checkbox
             >
             <br />
@@ -276,9 +307,10 @@
               color="primary"
               ngModel
               #isChecked="ngModel"
-              name="Sale"
-              [ngModelOptions]="{ standalone: false }"
+              name="saleBadge"
               class="example-margin fw-bold"
+              [ngModelOptions]="{ standalone: false }"
+              [(ngModel)]="productBadgeSale"
               >Sale Product</mat-checkbox
             >
             <div>
@@ -292,7 +324,8 @@
                   type="number"
                   ngModel
                   #salePrice="ngModel"
-                  name="sale Price"
+                  name="newPrice"
+                  [(ngModel)]="productBadgeSalePrice"
                   [ngModelOptions]="{ standalone: false }"
                   [disabled]="isChecked.value == false"
                 />
@@ -303,8 +336,32 @@
             <input
               type="submit"
               value="Save"
-              class="btn btn-danger px-4 py-2 text-uppercase fw-normal"
+              *ngIf="hideSaveButton"
+              class="btn btn-danger btn-sm px-4 py-2 text-uppercase fw-normal"
               [disabled]="!form.valid"
+            />
+            &nbsp; &nbsp;
+            <input
+              type="button"
+              (click)="resetForm(form)"
+              value="Clear"
+              class="btn btn-dark btn-sm px-4 py-2 text-uppercase fw-normal"
+            />
+            &nbsp; &nbsp;
+            <input
+              type="button"
+              *ngIf="showUpdateButton"
+              (click)="updateProduct(form)"
+              value="Update"
+              class="btn btn-success btn-sm px-4 py-2 text-uppercase fw-normal"
+            />
+            &nbsp; &nbsp;
+            <input
+              type="button"
+              *ngIf="showUpdateButton"
+              (click)="Reset(form)"
+              value="Back"
+              class="btn btn-warning btn-sm px-4 py-2 text-uppercase fw-normal"
             />
           </form>
         </div>
@@ -343,7 +400,7 @@
                       isChecked.value ? 'line-through' : 'none'
                     "
                   >
-                    {{ price.value | currency }} {{ "/ 1 kg" }}
+                    {{ price.value | currency }}
                   </p>
                   &nbsp;&nbsp;
                   <p class="fs-4 text-danger">

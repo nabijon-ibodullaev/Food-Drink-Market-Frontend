@@ -19,17 +19,19 @@ export class HomeComponent implements OnInit {
   fruitCategory: ProductCategories[] = [];
   drinkCategory: ProductCategories[] = [];
   foodProducts: FoodProduct[] = [];
+
   EMPTY_MESSAGE: string = '';
   IS_ACTIVE_MENU: boolean = false;
   items = [];
-  _ADD_TO_CARD: number = 1;
+  _ADD_TO_CARD: boolean = false;
   isFirst = true;
+
   @ViewChildren('subTotalWrap') subTotalItems!: QueryList<ElementRef>;
   @ViewChildren('subTotalWrap_existing')
   subTotalItems_existing!: QueryList<ElementRef>;
   constructor(
     private product: ProductService,
-    public cartService: AddToCardService
+    private AddToCardService: AddToCardService
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,14 @@ export class HomeComponent implements OnInit {
 
     this.product.getDrinkCategories().subscribe((data) => {
       this.drinkCategory = data;
+    });
+
+    this.product.getFoodProducts().subscribe((data) => {
+      this.foodProducts = data;
+
+      this.foodProducts.forEach((a: any) => {
+        Object.assign(a, { quantity: 1, total: a.price });
+      });
     });
   }
   slidesStore = [
@@ -97,18 +107,6 @@ export class HomeComponent implements OnInit {
     nav: true,
   };
 
-  onAddCart(food: FoodProduct) {
-    let index = this.foodProducts.indexOf(food);
-    this._ADD_TO_CARD++;
-  }
-  onRemoveCart(food: FoodProduct) {
-    if (this._ADD_TO_CARD === 0) {
-      this._ADD_TO_CARD = 0;
-    } else {
-      this._ADD_TO_CARD--;
-    }
-  }
-
   allProducts() {
     this.product.getFoodProducts().subscribe((data) => {
       this.foodProducts = data;
@@ -151,5 +149,29 @@ export class HomeComponent implements OnInit {
     this.product.getOnlyDairy().subscribe((data) => {
       this.foodProducts = data;
     });
+  }
+  Alcoholic() {
+    this.product.getOnlyAlcoholic().subscribe((res) => {
+      this.foodProducts = res;
+    });
+  }
+  NonAlcoholic() {
+    this.product.getOnlyNonAlcoholic().subscribe((res) => {
+      this.foodProducts = res;
+    });
+  }
+  HotDrinks() {
+    this.product.getOnlyHotDrinks().subscribe((res) => {
+      this.foodProducts = res;
+    });
+  }
+  JuiceAndPlantDrinks() {
+    this.product.getOnlyJuice().subscribe((res) => {
+      this.foodProducts = res;
+    });
+  }
+
+  addToCart(item: FoodProduct) {
+    this.AddToCardService.addtoCart(item);
   }
 }

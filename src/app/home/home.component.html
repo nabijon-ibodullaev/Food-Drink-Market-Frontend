@@ -92,36 +92,28 @@
               >Dairy Foods</mat-list-item
             >
             <mat-divider></mat-divider>
-          </mat-list>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel class="mt-1" hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title
-              class="d-flex align-items-center justify-content-between panel-color"
-            >
-              <div><i class="fa-solid fa-bottle-droplet"></i> Drinks</div>
-              <i class="fa-solid fa-caret-down"></i
-            ></mat-panel-title>
-          </mat-expansion-panel-header>
-          <mat-list>
-            <mat-list-item class="fw-bold text-uppercase"
-              >All Drinks</mat-list-item
-            >
             <mat-divider></mat-divider>
-            <mat-list-item class="fw-normal text-uppercase"
+            <mat-list-item
+              (click)="Alcoholic()"
+              class="fw-normal text-uppercase"
               >Alcoholic drinks</mat-list-item
             >
             <mat-divider></mat-divider>
-            <mat-list-item class="fw-normal text-uppercase"
+            <mat-list-item
+              (click)="NonAlcoholic()"
+              class="fw-normal text-uppercase"
               >Non-alcoholic drinks</mat-list-item
             >
             <mat-divider></mat-divider>
-            <mat-list-item class="fw-normal text-uppercase"
+            <mat-list-item
+              (click)="HotDrinks()"
+              class="fw-normal text-uppercase"
               >Hot drinks</mat-list-item
             >
             <mat-divider></mat-divider>
-            <mat-list-item class="fw-normal text-uppercase"
+            <mat-list-item
+              (click)="JuiceAndPlantDrinks()"
+              class="fw-normal text-uppercase"
               >Juice and plant drinks</mat-list-item
             >
             <mat-divider></mat-divider>
@@ -134,7 +126,7 @@
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
           <div
             fxFlex="25%"
-            fxFlex.xs="50%"
+            fxFlex.xs="100%"
             fxFlex.sm="33%"
             *ngFor="let food of foodProducts"
           >
@@ -163,24 +155,29 @@
                     >{{ food.name | uppercase }}</mat-card-title
                   >
                   <div class="d-flex align-items-center justify-content-center">
+                    <span class="fw-bold text-uppercase fs-6"> Price: </span>
+                    &nbsp;
                     <p
                       class="text-end fw-bold fs-6 pt-2"
+                      [style.color]="food.saleBadge ? '#34568b' : '#000'"
                       [style.text-decoration]="
                         food.saleBadge ? 'line-through' : 'none'
                       "
                     >
-                      Price: {{ food.price | currency }}
+                      {{ food.price | currency }}
                     </p>
                     &nbsp;&nbsp;
-                    <p *ngIf="food.saleBadge" class="fs-4 text-danger">
+                    <p *ngIf="food.saleBadge" class="fs-5 text-danger fw-bold">
                       {{ food.newPrice | currency }}
                     </p>
                   </div>
                 </mat-card-content>
+
                 <mat-card-actions
                   class="d-flex align-items-center justify-content-around"
                 >
                   <button
+                    (click)="addToCart(food)"
                     class="btn btn-danger btn-sm text-uppercase fw-bold addCart"
                   >
                     Add to Cart <i class="fas fa-shopping-cart"></i>

@@ -26,51 +26,62 @@
         </select>
       </ul>
       <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-        <li class="nav-item">
+        <li class="nav-item d-flex align-items-center">
           <div class="dropdown">
-            <button
-              class="btn dropdown-toggle"
-              type="button"
+            <a
+              href="#"
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              role="button"
               (click)="addCardClick()"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i class="fas fa-shopping-bag bag-icon"></i> (1)
-            </button>
-            <ul
-              [class.show]="showShoppingCard"
-              class="dropdown-menu rounded-1"
-              aria-labelledby="dropdownMenuButton1"
-            >
-              <div class="shoppingCard">
-                <div class="d-flex align-items-center">
-                  <div class="flex-shrink-0">
-                    <img
-                      src="https://freepngimg.com/thumb/papaya/176229-papaya-green-free-transparent-image-hd-thumb.png"
-                      alt=""
-                      width="90px"
-                    />
-                  </div>
-                  <div class="flex-grow-1 ms-3">
-                    <div class="input-group mb-3">
-                      <input
-                        type="number"
-                        class="form-control"
-                        aria-label="Price"
-                        placeholder="1"
-                        value="1"
-                        width="50px"
-                        aria-describedby="basic-addon1"
-                      />
-                      <span class="input-group-text" id="basic-addon1"
-                        >$34.32</span
+              <i class="fa-solid fa-cart-shopping text-success fs-6"></i
+              ><span class="text-decoration-none text-dark fw-bold"
+                >( {{ products.length }} )</span
+              >
+              <span class="caret"></span
+            ></a>
+            <div [class.d-none]="products.length === 0">
+              <ul
+                [class.show]="showShoppingCard"
+                class="dropdown-menu dropdown-cart pl-2 pt-2 pr-2"
+                role="menu"
+              >
+                <li *ngFor="let item of products">
+                  <span class="item">
+                    <span class="item-left">
+                      <img width="50px" src="{{ item.imageUrl }}" alt="" />
+                      <span class="item-info">
+                        <span>{{ item.name }}</span>
+                        <span>price: {{ item.price | currency }}</span>
+                      </span>
+                    </span>
+                    <span class="item-right">
+                      <button
+                        (click)="removeProduct(item)"
+                        class="btn btn-danger btn-sm"
                       >
-                    </div>
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    </span>
+                  </span>
+                </li>
+                <h4 class="text-dark text-center mt-3 fw-bold text-uppercase">
+                  Total Price: {{ grandTotal | currency }} <br />
+                  <div class="btn-group">
+                    <span
+                      (click)="emptyCart()"
+                      class="btn btn-danger fw-bold btn-sm text-lowercase"
+                      ><i class="fa-solid fa-trash"></i> Remove All</span
+                    >
+                    <span class="btn btn-success fw-bold btn-sm text-lowercase"
+                      >Check Out
+                    </span>
                   </div>
-                </div>
-              </div>
-            </ul>
+                </h4>
+              </ul>
+            </div>
           </div>
         </li>
         <li class="nav-item">

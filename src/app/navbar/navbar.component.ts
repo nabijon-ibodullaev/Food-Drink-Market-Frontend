@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { ProductService } from '../Services/product.service';
 import { ProductCategories } from '../Models/product-categories';
 import { AddToCardService } from '../Services/add-to-card.service';
+import { FoodProduct } from '../Models/food-product';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +21,14 @@ export class NavbarComponent implements OnInit {
   showShoppingCard: boolean = false;
   allCategory: ProductCategories[] = [];
   ShowNavbar: boolean = false;
-  items = [];
+  public products: FoodProduct[] = [];
+  public grandTotal: number = 0;
+  public totalItem: number = 0;
+
+  @ViewChildren('subTotalWrap') subTotalItems!: QueryList<ElementRef>;
+  @ViewChildren('subTotalWrap_existing')
+  subTotalItems_existing!: QueryList<ElementRef>;
+
   addCardClick() {
     this.showShoppingCard = !this.showShoppingCard;
   }
@@ -22,28 +37,28 @@ export class NavbarComponent implements OnInit {
   }
   constructor(
     private service: ProductService,
-    private CardService: AddToCardService
+    private AddToCardService: AddToCardService,
+    private currencyPipe: CurrencyPipe
   ) {}
-
-  //----- calculate total
-  // get total() {
-  //   return this.items.reduce(
-  //     (sum, x) => ({
-  //       qtyTotal: 1,
-  //       price: sum.price + x.qtyTotal * x.price,
-  //     }),
-  //     { qtyTotal: 1, price: 0 }
-  //   ).price;
-  // }
 
   ngOnInit() {
     this.service.getAllCategory().subscribe((data) => {
       this.allCategory = data;
     });
-    let storeData = localStorage.getItem('isUserLoggedIn');
-    console.log('StoreData: ' + storeData);
 
-    if (storeData != null && storeData == 'true') this.isUserLoggedIn = true;
-    else this.isUserLoggedIn = false;
+    this.AddToCardService.getProducts().subscribe((res) => {
+      this.totalItem = res.length;
+    });
+
+    this.AddToCardService.getProducts().subscribe((res) => {
+      this.products = res;
+      this.grandTotal = this.AddToCardService.getTotalPrice();
+    });
+  }
+  removeProduct(item: any) {
+    this.AddToCardService.removeCardItem(item);
+  }
+  emptyCart() {
+    this.AddToCardService.removeAllCart();
   }
 }

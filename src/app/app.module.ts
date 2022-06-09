@@ -38,6 +38,7 @@ import { AuthGuard } from './Services/auth-guard.service';
 import { LogOutComponent } from './Component/log-out/log-out.component';
 import { AddToCardService } from './Services/add-to-card.service';
 import { AdminService } from './Services/admin.service';
+import { CurrencyPipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,6 +87,7 @@ import { AdminService } from './Services/admin.service';
     AddToCardService,
     AdminService,
     AuthGuard,
+    CurrencyPipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
