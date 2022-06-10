@@ -12,7 +12,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './Services/product.service';
-import { ShopsComponent } from './Component/shops/shops.component';
 import { FAQComponent } from './Component/faq/faq.component';
 import { LoginComponent } from './Component/login/login.component';
 import { SignUpComponent } from './Component/sign-up/sign-up.component';
@@ -45,7 +44,6 @@ import { CurrencyPipe } from '@angular/common';
     NavbarComponent,
     HomeComponent,
     FooterComponent,
-    ShopsComponent,
     FAQComponent,
     LoginComponent,
     SignUpComponent,

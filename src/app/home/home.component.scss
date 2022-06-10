@@ -23,7 +23,7 @@
   padding: 10px !important;
 }
 .content {
-  padding: 16px;
+  padding: 20px;
 }
 
 .content > mat-card {
@@ -47,22 +47,20 @@ h2 {
   padding: 0px 0;
 }
 .badge-new {
-  top: 10px;
-  right: 10px;
-  width: 50px;
-  height: 50px;
+  top: -22px;
+  right: -25px;
+  width: 100px;
+  height: auto;
   opacity: 1;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
+  transform: rotate(90deg);
 }
 .badge-sale {
-  top: -15px;
-  left: -15px;
-  width: 90px;
-  height: 40px;
+  top: -40px;
+  left: -20px;
+  width: 110px;
+  height: auto;
   opacity: 1;
+  transform: rotateZ(-10deg);
 }
 .bg-card {
   width: 100%;
@@ -82,16 +80,36 @@ h2 {
 }
 .addCart:hover {
   background-color: #00c58a;
-  border: 1px solid #00c58a;
+  border: 1px solid hwb(162 0% 23%);
   transition: background 0.4s ease-in;
 }
 .mat-list-item {
   cursor: pointer;
 }
 .mat-list-item:hover {
-  background-color: #f8f9fa;
+  background-color: #ddd;
 }
 .mat-list-item:hover:active {
-  background-color: #ff6f61;
-  color: #fff;
+  background-color: #ddd;
+}
+@media (max-width: 400px) {
+  .head-h1 {
+    font-size: 30px;
+    font-weight: 800;
+  }
+  .head-text {
+    color: #000000;
+  }
+  .search {
+    display: none;
+  }
+  .form-control {
+    height: 40px;
+  }
+  .btn {
+    height: 40px;
+  }
+  .form-control::placeholder {
+    font-size: 14px;
+  }
 }

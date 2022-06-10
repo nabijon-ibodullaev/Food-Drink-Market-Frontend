@@ -1,3 +1,4 @@
+import { MatPaginator } from '@angular/material/paginator';
 export class FoodProduct {
   _id!: any;
   name!: string;
@@ -12,4 +13,5 @@ export class FoodProduct {
   oldPrice!: number;
   newPrice!: number;
   total!: number;
+  paginator!: MatPaginator;
 }

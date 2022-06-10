@@ -94,6 +94,16 @@ export class ProductService {
       'http://localhost:3000/api/foods/hot-drinks'
     );
   }
+  getOnlyNewProducts(): Observable<FoodProduct[]> {
+    return this.http.get<FoodProduct[]>(
+      'http://localhost:3000/api/foods/new-products'
+    );
+  }
+  getOnlySaleProducts(): Observable<FoodProduct[]> {
+    return this.http.get<FoodProduct[]>(
+      'http://localhost:3000/api/foods/sale-products'
+    );
+  }
 
   updateProduct(product: FoodProduct): Observable<FoodProduct> {
     return this.http.put<FoodProduct>(

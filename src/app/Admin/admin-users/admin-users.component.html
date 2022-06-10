@@ -167,8 +167,15 @@
               #input
             />
           </mat-form-field>
-
+          <div class="mx-auto">
+            <mat-spinner
+              color="warn"
+              class="mx-auto"
+              *ngIf="isGetProducts"
+            ></mat-spinner>
+          </div>
           <table
+            *ngIf="!isGetProducts"
             mat-table
             [dataSource]="dataSource"
             class="mat-elevation-z8"

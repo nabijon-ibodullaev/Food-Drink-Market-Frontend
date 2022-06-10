@@ -22,6 +22,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   showUpdateButton: boolean = false;
   hideSaveButton: boolean = true;
   TITLE_PRODUCT = 'CREATE NEW PRODUCT';
+  isGetProducts = true;
 
   displayedColumns: string[] = [
     'imageUrl',
@@ -48,6 +49,7 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.TOTAL_PRODUCTS = data.length;
+      this.isGetProducts = false;
     });
 
     this.service.getAllFruitAndDrinkCategory().subscribe((data) => {

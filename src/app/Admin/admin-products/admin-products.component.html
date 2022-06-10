@@ -337,7 +337,7 @@
               type="submit"
               value="Save"
               *ngIf="hideSaveButton"
-              class="btn btn-danger btn-sm px-4 py-2 text-uppercase fw-normal"
+              class="btn btn-danger btn-sm px-md-4 py-2 text-uppercase fw-normal"
               [disabled]="!form.valid"
             />
             &nbsp; &nbsp;
@@ -345,7 +345,7 @@
               type="button"
               (click)="resetForm(form)"
               value="Clear"
-              class="btn btn-dark btn-sm px-4 py-2 text-uppercase fw-normal"
+              class="btn btn-dark btn-sm px-md-4 py-2 text-uppercase fw-normal"
             />
             &nbsp; &nbsp;
             <input
@@ -353,7 +353,7 @@
               *ngIf="showUpdateButton"
               (click)="updateProduct(form)"
               value="Update"
-              class="btn btn-success btn-sm px-4 py-2 text-uppercase fw-normal"
+              class="btn btn-success btn-sm px-md-4 py-2 text-uppercase fw-normal"
             />
             &nbsp; &nbsp;
             <input
@@ -361,7 +361,7 @@
               *ngIf="showUpdateButton"
               (click)="Reset(form)"
               value="Back"
-              class="btn btn-warning btn-sm px-4 py-2 text-uppercase fw-normal"
+              class="btn btn-warning btn-sm px-md-4 py-2 text-uppercase fw-normal"
             />
           </form>
         </div>
@@ -374,18 +374,19 @@
               [style.backgroundImage]="'url(' + imageUrl.value + ')'"
               class="bg-card"
             ></div>
-            <h5
+            <img
               *ngIf="isNew.value"
-              class="badge badge-new bg-warning position-absolute d-flex align-items-center justify-content-center fw-bold"
-            >
-              new
-            </h5>
-            <h5
+              width="50px"
+              src="../../../assets/Home/new tag.png"
+              class="badge badge-new position-absolute d-flex align-items-center justify-content-center fw-bold"
+            />
+
+            <img
               *ngIf="isChecked.value"
-              class="badge badge-sale position-absolute bg-danger d-flex align-items-center justify-content-center fw-bold"
-            >
-              Sale
-            </h5>
+              src="../../../assets/Home/sale.png"
+              width="25px"
+              class="badge badge-sale position-absolute d-flex align-items-center justify-content-center fw-bold"
+            />
             <div class="card-f">
               <mat-card-content>
                 <mat-card-title
@@ -411,8 +412,8 @@
               <mat-card-actions
                 class="d-flex align-items-center justify-content-around pb-3"
               >
-                <button class="btn btn-danger btn-sm">
-                  <i class="fas fa-shopping-cart"></i>
+                <button class="btn btn-danger btn-sm text-uppercase fw-bold">
+                  Add to Cart <i class="fas fa-shopping-cart"></i>
                 </button>
               </mat-card-actions>
             </div>
@@ -423,9 +424,7 @@
     <div class="container-fluid bg-theme py-3">
       <div class="row">
         <div class="col-md-12 px-sm-2">
-          <h2 class="text-center text-uppercase text-danger table-responsive">
-            All Products
-          </h2>
+          <h2 class="text-center text-uppercase text-danger">All Products</h2>
           <mat-form-field appearance="standard">
             <mat-label>Filter</mat-label>
             <input
@@ -435,130 +434,142 @@
               #input
             />
           </mat-form-field>
+          <div class="table">
+            <div class="mx-auto">
+              <mat-spinner
+                color="warn"
+                class="mx-auto"
+                *ngIf="isGetProducts"
+              ></mat-spinner>
+            </div>
+            <table
+              *ngIf="!isGetProducts"
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="mat-elevation-z8"
+            >
+              <ng-container matColumnDef="imageUrl">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Image Url
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  <img
+                    src="{{ note.imageUrl }}"
+                    width="60px"
+                    [alt]="note.imageUrl"
+                  />
+                </td>
+              </ng-container>
 
-          <table
-            mat-table
-            [dataSource]="dataSource"
-            matSort
-            class="mat-elevation-z8"
-          >
-            <ng-container matColumnDef="imageUrl">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Image Url
-              </th>
-              <td mat-cell *matCellDef="let note">
-                <img
-                  src="{{ note.imageUrl }}"
-                  width="60px"
-                  [alt]="note.imageUrl"
-                />
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell class="fw-bold" *matCellDef="let note">
+                  {{ note.name | titlecase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  description
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.description | lowercase }}
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-              <td mat-cell class="fw-bold" *matCellDef="let note">
-                {{ note.name | titlecase }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                description
-              </th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.description | lowercase }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.price | currency }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="rating">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>rating</th>
-              <td mat-cell *matCellDef="let note">
-                <i class="fas fa-star text-warning"></i> {{ note.rating }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="categoryName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                categoryName
-              </th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.categoryName }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="newBadge">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                newBadge
-              </th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.newBadge }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="saleBadge">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                saleBadge
-              </th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.saleBadge }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="oldPrice">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                oldPrice
-              </th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.oldPrice | currency }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="newPrice">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                newPrice
-              </th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.newPrice | currency }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="total">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>total</th>
-              <td mat-cell *matCellDef="let note">
-                {{ note.total + "kg" }}
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="edit">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>edit</th>
-              <td mat-cell *matCellDef="let note">
-                <button
-                  mat-icon-button
-                  [matMenuTriggerFor]="menu"
-                  aria-label="Example icon-button with a menu"
-                >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <button mat-menu-item (click)="productEdit(note)">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.price | currency }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="rating">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  rating
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  <i class="fas fa-star text-warning"></i> {{ note.rating }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="categoryName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  categoryName
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.categoryName }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="newBadge">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  newBadge
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.newBadge }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="saleBadge">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  saleBadge
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.saleBadge }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="oldPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  oldPrice
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.oldPrice | currency }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="newPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  newPrice
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.newPrice | currency }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>total</th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.total + "kg" }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>edit</th>
+                <td mat-cell *matCellDef="let note">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon>more_vert</mat-icon>
                   </button>
-                  <button mat-menu-item (click)="deleteProduct(note)">
-                    <mat-icon>delete</mat-icon>
-                    <span>delete</span>
-                  </button>
-                </mat-menu>
-              </td>
-            </ng-container>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="productEdit(note)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteProduct(note)">
+                      <mat-icon>delete</mat-icon>
+                      <span>delete</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-          <mat-paginator
-            [pageSizeOptions]="[5, 15, 30]"
-            showFirstLastButtons
-          ></mat-paginator>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
         </div>
+        <mat-paginator
+          class="w-100"
+          [pageSizeOptions]="[5, 15, 30]"
+          showFirstLastButtons
+        ></mat-paginator>
       </div>
     </div>
   </div>

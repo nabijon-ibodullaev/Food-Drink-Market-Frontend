@@ -13,6 +13,7 @@ import { UsersService } from '../Services/users.service';
 export class AdminUsersComponent implements OnInit, AfterViewInit {
   opened: boolean = false;
   users!: User[];
+  isGetProducts = true;
 
   displayedColumns: string[] = ['_id', 'name', 'email', 'isAdmin', 'regDate'];
   dataSource!: MatTableDataSource<User>;
@@ -27,6 +28,7 @@ export class AdminUsersComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.TOTAL_USERS = data.length;
+      this.isGetProducts = false;
     });
   }
   ngAfterViewInit() {}

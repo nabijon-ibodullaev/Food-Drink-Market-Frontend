@@ -10,6 +10,7 @@ import { FoodProduct } from '../Models/food-product';
 import { ProductCategories } from '../Models/product-categories';
 import { ProductService } from '../Services/product.service';
 import { AddToCardService } from '../Services/add-to-card.service';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
   fruitCategory: ProductCategories[] = [];
   drinkCategory: ProductCategories[] = [];
   foodProducts: FoodProduct[] = [];
+  isGetProducts = true;
 
   EMPTY_MESSAGE: string = '';
   IS_ACTIVE_MENU: boolean = false;
@@ -26,9 +28,6 @@ export class HomeComponent implements OnInit {
   _ADD_TO_CARD: boolean = false;
   isFirst = true;
 
-  @ViewChildren('subTotalWrap') subTotalItems!: QueryList<ElementRef>;
-  @ViewChildren('subTotalWrap_existing')
-  subTotalItems_existing!: QueryList<ElementRef>;
   constructor(
     private product: ProductService,
     private AddToCardService: AddToCardService
@@ -45,7 +44,7 @@ export class HomeComponent implements OnInit {
 
     this.product.getFoodProducts().subscribe((data) => {
       this.foodProducts = data;
-
+      this.isGetProducts = false;
       this.foodProducts.forEach((a: any) => {
         Object.assign(a, { quantity: 1, total: a.price });
       });
@@ -168,6 +167,17 @@ export class HomeComponent implements OnInit {
   JuiceAndPlantDrinks() {
     this.product.getOnlyJuice().subscribe((res) => {
       this.foodProducts = res;
+    });
+  }
+
+  sortOnlySaleProducts() {
+    this.product.getOnlySaleProducts().subscribe((data) => {
+      this.foodProducts = data;
+    });
+  }
+  sortOnlyNewProducts() {
+    this.product.getOnlyNewProducts().subscribe((data) => {
+      this.foodProducts = data;
     });
   }
 
