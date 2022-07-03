@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AdminService {
+  isVisibleHeader = false;
   constructor(private http: HttpClient) {}
 
   getFoodAmount(): Observable<any> {
@@ -13,5 +14,8 @@ export class AdminService {
   }
   getAllUsers(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/api/user');
+  }
+  get hideHeader() {
+    return true;
   }
 }

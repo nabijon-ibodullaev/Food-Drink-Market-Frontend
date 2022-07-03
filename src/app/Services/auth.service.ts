@@ -1,42 +1,104 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SignUp } from '../Models/sign-up';
-import { Login } from '../Models/login';
+import { Router } from '@angular/router';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+const BACKEND_URL = 'http://localhost:3000/api/';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private token: any;
-  isUserLoggedIn: boolean = false;
-  constructor(private http: HttpClient) {}
+  private isAuthenticated = false;
+  private authStatusListener = new Subject<boolean>();
+  private _isLoggedIn = new BehaviorSubject<boolean>(false);
+  private isAdminStatusListener = new Subject<boolean>();
+  constructor(private router: Router, private http: HttpClient) {}
+
+  getIsAdminStatusListener() {
+    return this.isAdminStatusListener.asObservable();
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
+  }
 
   getToken() {
-    return this.token;
+    return localStorage.getItem('token');
   }
-  registerUser(name: string, email: string, password: any) {
-    const authData: SignUp = { name: name, email: email, password: password };
-    return this.http
-      .post<any>('http://localhost:3000/api/user', authData)
-      .subscribe((res) => {
-        console.log(res);
-      });
-  }
-  logout(): void {
-    this.isUserLoggedIn = false;
-    localStorage.removeItem('isUserLoggedIn');
-  }
-  profile() {}
 
-  loginUser(email: string, password: any) {
-    const user: Login = { email: email, password: password };
-    localStorage.setItem(
-      'isUserLoggedIn',
-      this.isUserLoggedIn ? 'true' : 'false'
-    );
-    return this.http.post<{ token: string }>(
-      'http://localhost:3000/api/auth',
-      user
-    );
+  getIsLoggedIn() {
+    return this._isLoggedIn.asObservable();
+  }
+
+  // Sign-in
+  signIn(user: any) {
+    return this.http
+      .post<{ token: string }>(BACKEND_URL + 'auth', user)
+      .subscribe(
+        (res) => {
+          const token = res.token;
+          this.router.navigate(['/']);
+          if (res.token) {
+            this.isAuthenticated = true;
+            this.authStatusListener.next(true);
+            this.saveAuthData(res.token);
+            this._isLoggedIn.next(true);
+          } else {
+            this.isAuthenticated = false;
+            this.authStatusListener.next(false);
+          }
+          if (this.getCurrentUser.isAdmin === true) {
+            this.isAdminStatusListener.next(true);
+          } else {
+            this.isAdminStatusListener.next(false);
+          }
+        },
+        () => {
+          this.authStatusListener.next(false);
+        }
+      );
+  }
+
+  private saveAuthData(token: string) {
+    localStorage.setItem('token', token);
+  }
+  private clearAuthData() {
+    localStorage.removeItem('token');
+  }
+
+  private getAuthData() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+    return { token: token };
+  }
+
+  logOut() {
+    this.router.navigate(['/']);
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.isAdminStatusListener.next(false);
+    this.clearAuthData();
+    localStorage.removeItem('isAuth');
+    this._isLoggedIn.next(false);
+  }
+
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+
+  get getCurrentUser() {
+    let token = localStorage.getItem('token');
+
+    if (!token) {
+      return false;
+    } else {
+      let helper = new JwtHelperService().decodeToken(token);
+      return helper;
+    }
   }
 }

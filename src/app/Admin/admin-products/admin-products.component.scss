@@ -29,13 +29,6 @@ a {
 a:hover {
   color: #123532;
 }
-table {
-  border-radius: 10px;
-}
-/* Structure */
-table {
-  width: 100%;
-}
 
 .mat-form-field {
   font-size: 14px;
@@ -85,6 +78,10 @@ table {
 h1 {
   color: #424242 !important;
 }
-.table {
+table {
+  width: 100%;
   overflow-y: scroll;
+}
+.table {
+  overflow-x: scroll;
 }

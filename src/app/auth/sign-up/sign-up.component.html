@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 py-5">
+      <div class="auth-wrapper">
+        <form class="form-signin" [formGroup]="signupForm" (ngSubmit)="registerUser()">
+          <h1 class="mb-3 fw-bold mat-title text-uppercase text-center">Please sign up</h1>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" formControlName="name" required name="name" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required name="email" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" required name="password" />
+          </mat-form-field>
+          <div class="text-end">
+            <button [disabled]="!signupForm.valid" type="submit" mat-raised-button class="px-4" color="warn">
+              Sign up
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

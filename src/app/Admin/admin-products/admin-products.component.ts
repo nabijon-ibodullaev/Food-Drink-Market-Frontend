@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FoodProduct } from 'src/app/Models/food-product';
 import { ProductService } from '../../Services/product.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-products',
@@ -41,7 +42,11 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   dataSource!: MatTableDataSource<FoodProduct>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private service: ProductService, private http: HttpClient) {}
+  constructor(
+    private service: ProductService,
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.service.getFoodProducts().subscribe((data) => {
@@ -70,19 +75,48 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   deleteProduct(product: FoodProduct) {
     this.http
       .delete('http://localhost:3000/api/foods' + '/' + product._id)
-      .subscribe((data) => {
-        console.log(data);
-      });
+      .subscribe(
+        (data) => {
+          this.toastr.success('Successfully deleted', 'post', {
+            closeButton: false,
+            progressAnimation: 'increasing',
+            progressBar: true,
+            easing: 'linear',
+          });
+        },
+        () => {
+          this.toastr.error('Something went wrong', 'post', {
+            closeButton: false,
+            progressAnimation: 'increasing',
+            progressBar: true,
+            easing: 'linear',
+          });
+        }
+      );
     window.location.reload();
   }
 
   onSubmitProduct(form: NgForm) {
     // console.log(form.value);
-    this.service.newProduct(form.value).subscribe((data) => {
-      console.log(data);
-    });
+    this.service.newProduct(form.value).subscribe(
+      (data) => {
+        this.toastr.success('Successfully created', 'post', {
+          closeButton: true,
+          progressAnimation: 'increasing',
+          progressBar: true,
+          easing: 'linear',
+        });
+      },
+      () => {
+        this.toastr.error('Something went wrong', 'post', {
+          closeButton: false,
+          progressAnimation: 'decreasing',
+          progressBar: true,
+          easing: 'linear',
+        });
+      }
+    );
     form.resetForm();
-    window.location.reload();
   }
   resetForm(form: NgForm) {
     form.resetForm();
@@ -117,9 +151,24 @@ export class AdminProductsComponent implements OnInit, AfterViewInit {
   updateProduct(product: NgForm) {
     this.hideSaveButton = true;
     this.showUpdateButton = false;
-    this.service
-      .updateProduct(product.value)
-      .subscribe((res) => console.log(res));
+    this.service.updateProduct(product.value).subscribe(
+      (res) => {
+        this.toastr.success('Successfully updated', 'post', {
+          closeButton: true,
+          progressAnimation: 'increasing',
+          progressBar: true,
+          easing: 'linear',
+        });
+      },
+      () => {
+        this.toastr.error('Something went wrong', 'post', {
+          closeButton: true,
+          progressAnimation: 'increasing',
+          progressBar: true,
+          easing: 'linear',
+        });
+      }
+    );
 
     this.TITLE_PRODUCT = 'CREATE NEW PRODUCT';
     product.resetForm();

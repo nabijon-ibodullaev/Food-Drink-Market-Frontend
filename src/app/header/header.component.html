@@ -1,0 +1,88 @@
+<mat-toolbar style="background-color: #ff6e61d3;" [class.d-none]="isVisibleHeader">
+  <mat-toolbar-row>
+    <span routerLink="/" class="text-white fw-bold">Super Market</span>
+    <span class="example-spacer"></span>
+    <button mat-button class="text-white bg-white d-flex align-items-center">
+      <div (blur)="changeVisible()" class="dropdown">
+        <a class="dropdown-toggle text-decoration-none" data-toggle="dropdown" role="button" (click)="addCardClick()"
+          aria-expanded="false">
+          <i class="fa-solid fa-cart-shopping text-success fs-6"></i><span class=" text-dark fw-bold items-number">(
+            {{ items.length }} )</span>
+          <span class="caret"></span></a>
+        <div>
+          <ul (blur)="changeVisible()" id="shoppingCard" [class.show]="showShoppingCard"
+            class="dropdown-menu dropdown-cart pl-2 pt-2 pr-2" role="menu">
+            <li *ngFor="let item of items">
+              <span class="item">
+                <span class="item-left">
+                  <img width="50px" src="{{ item.imageUrl }}" alt="" />
+                  <span class="item-info">
+                    <span class="fw-bold">{{ item.name | uppercase }}</span>
+                    <div class="w-100 d-flex align-items-center justify-content-around">
+                      <ng-container *ngIf="item.saleBadge; else price">
+                        <span class="text-muted">{{
+                              item.newPrice | currency
+                            }}</span>
+                      </ng-container>
+                      <ng-template #price>
+                        <span class="text-muted">{{
+                              item.price | currency
+                            }}</span>
+                      </ng-template>
+                      <div class="col-2 p-0">
+                        <input [(ngModel)]="item.qtyTotal" [ngModelOptions]="{ standalone: false }" min="1"
+                          type="number" style="width: 40px; height: 20px" value="{{ item.qtyTotal }}" name="item"
+                          (change)="changeSubtotal(item, i)" />
+                      </div>
+                    </div>
+                  </span>
+                </span>
+                &nbsp;
+                <span class="item-right">
+                  <button (click)="removeFromCart(item)" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </span>
+              </span>
+            </li>
+            <div>
+              Order Total:
+              <span class="font-weight-bold">{{ total | currency }}</span>
+              <hr />
+              <button class="btn btn-primary" (click)="clearCart()">
+                Clear Items
+              </button>
+              <br />
+              <br />
+              <small *ngIf="items.length <= 0" class="fs-6 mt-2 text-muted">Please Refresh Browser. Something went
+                wrong...</small>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </button>
+
+    &nbsp;
+    <button mat-button>
+      <a class="text-white text-decoration-none" routerLink="/contact" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">Contact</a>
+    </button>
+    <ng-container *ngIf="isUserAuth">
+      <button mat-button color="accent">
+        <a class="text-white text-decoration-none" (click)="this.auth.logOut()">logout</a>
+      </button>
+    </ng-container>
+    &nbsp;
+    <ng-container *ngIf="!isUserAuth">
+      <button mat-button>
+        <a class=" text-white text-decoration-none" routerLink="/auth/login">Login</a>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="isAdmin">
+      <button (click)="hideHeader()" mat-flat-button color="warn">
+        <a class="text-white text-decoration-none" routerLink="/admin/admin">Admin</a>
+      </button>
+    </ng-container>
+
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,16 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FoodProduct } from '../Models/food-product';
 import { ProductCategories } from '../Models/product-categories';
 import { ProductService } from '../Services/product.service';
 import { AddToCardService } from '../Services/add-to-card.service';
-import { PageEvent } from '@angular/material/paginator';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,63 +15,48 @@ export class HomeComponent implements OnInit {
   drinkCategory: ProductCategories[] = [];
   foodProducts: FoodProduct[] = [];
   isGetProducts = true;
-
+  searchData: any = [];
   EMPTY_MESSAGE: string = '';
   IS_ACTIVE_MENU: boolean = false;
-  items = [];
   _ADD_TO_CARD: boolean = false;
   isFirst = true;
+  isLoading = true;
 
+  items: FoodProduct[] = [];
   constructor(
     private product: ProductService,
     private AddToCardService: AddToCardService
   ) {}
 
-  ngOnInit() {
-    this.product.getFruitCategories().subscribe((data) => {
-      this.fruitCategory = data;
-    });
-
-    this.product.getDrinkCategories().subscribe((data) => {
-      this.drinkCategory = data;
-    });
-
-    this.product.getFoodProducts().subscribe((data) => {
-      this.foodProducts = data;
-      this.isGetProducts = false;
-      this.foodProducts.forEach((a: any) => {
-        Object.assign(a, { quantity: 1, total: a.price });
-      });
-    });
-  }
+  // *----------------------------BANNER-----------------------------
   slidesStore = [
     {
       id: 1,
-      src: '../../assets/offer-1.png',
+      src: '../../assets/banner/offer-1.png',
       alt: 'Hello',
       title: 'Hello Japan',
     },
     {
       id: 2,
-      src: '../../assets/offer-2.png',
+      src: '../../assets/banner/offer-2.png',
       alt: 'Hello',
       title: 'Hello Japan',
     },
     {
       id: 3,
-      src: '../../assets/offer-3.png',
+      src: '../../assets/banner/offer-3.png',
       alt: 'Hello',
       title: 'Hello Japan',
     },
     {
       id: 4,
-      src: '../../assets/offer-4.png',
+      src: '../../assets/banner/offer-4.png',
       alt: 'Hello',
       title: 'Hello Japan',
     },
   ];
 
-  // ! Own carousel settings
+  // !---------------------------- Own carousel settings-------------------------
   customOptions: OwlOptions = {
     loop: false,
     mouseDrag: true,
@@ -106,82 +85,260 @@ export class HomeComponent implements OnInit {
     nav: true,
   };
 
+  // *----------------------getting all products----------------------
   allProducts() {
-    this.product.getFoodProducts().subscribe((data) => {
-      this.foodProducts = data;
-    });
-  }
-  Fruits() {
-    this.product.getOnlyFruits().subscribe((data) => {
-      this.foodProducts = data;
-    });
-  }
-  Vegetables() {
-    this.product.getOnlyVegetables().subscribe((data) => {
-      this.foodProducts = data;
-    });
-  }
-  MeatAndPoultry() {
-    this.product.getOnlyMeat().subscribe((data) => {
-      this.foodProducts = data;
-    });
-  }
-  Fish() {
-    this.product.getOnlyFish().subscribe((data) => {
-      this.foodProducts = data;
-      if (data.length <= 0) {
-        this.EMPTY_MESSAGE = 'Empty Products';
+    this.isLoading = true;
+    this.product.getFoodProducts().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
       }
-    });
+    );
   }
+
+  // *----------------------getting fruits products----------------------
+  Fruits() {
+    this.isLoading = true;
+    this.product.getOnlyFruits().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+  }
+
+  // *----------------------getting vegetables products----------------------
+  Vegetables() {
+    this.isLoading = true;
+    this.product.getOnlyVegetables().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+  }
+
+  // *----------------------getting meat and poultry  products----------------------
+  MeatAndPoultry() {
+    this.isLoading = true;
+    this.product.getOnlyMeat().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+  }
+
+  // *----------------------getting fish products----------------------
+  Fish() {
+    this.isLoading = true;
+    this.product.getOnlyFish().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+
+        if (data.length <= 0) {
+          this.EMPTY_MESSAGE = 'Empty Products';
+        }
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+  }
+
+  // *----------------------getting grains products----------------------
   Grains() {
-    this.product.getOnlyGrains().subscribe((data) => {
-      this.foodProducts = data;
-    });
+    this.isLoading = true;
+    this.product.getOnlyGrains().subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+
+  // *----------------------getting eggs products----------------------
   Eggs() {
-    this.product.getOnlyEggs().subscribe((data) => {
-      this.foodProducts = data;
-    });
+    this.isLoading = true;
+    this.product.getOnlyEggs().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+
+  // *----------------------getting dairy products----------------------
   DairyFoods() {
-    this.product.getOnlyDairy().subscribe((data) => {
-      this.foodProducts = data;
-    });
+    this.isLoading = true;
+    this.product.getOnlyDairy().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+
+  // *----------------------getting alcoholic drinks----------------------
   Alcoholic() {
-    this.product.getOnlyAlcoholic().subscribe((res) => {
-      this.foodProducts = res;
-    });
+    this.isLoading = true;
+    this.product.getOnlyAlcoholic().subscribe(
+      (res) => {
+        this.foodProducts = res;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+
+  // *----------------------getting NonAlcoholics drinks----------------------
   NonAlcoholic() {
-    this.product.getOnlyNonAlcoholic().subscribe((res) => {
-      this.foodProducts = res;
-    });
+    this.isLoading = true;
+    this.product.getOnlyNonAlcoholic().subscribe(
+      (res) => {
+        this.foodProducts = res;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+
+  // *----------------------getting Hot drinks----------------------
   HotDrinks() {
-    this.product.getOnlyHotDrinks().subscribe((res) => {
-      this.foodProducts = res;
-    });
+    this.isLoading = true;
+    this.product.getOnlyHotDrinks().subscribe(
+      (res) => {
+        this.foodProducts = res;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+
+  // *----------------------getting Juice drinks----------------------
   JuiceAndPlantDrinks() {
-    this.product.getOnlyJuice().subscribe((res) => {
-      this.foodProducts = res;
-    });
+    this.isLoading = true;
+    this.product.getOnlyJuice().subscribe(
+      (res) => {
+        this.foodProducts = res;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
 
+  // *----------------------getting Sort Sale Products----------------------
   sortOnlySaleProducts() {
-    this.product.getOnlySaleProducts().subscribe((data) => {
-      this.foodProducts = data;
-    });
+    this.isLoading = true;
+    this.product.getOnlySaleProducts().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
+  // *----------------------getting Sort New Products----------------------
   sortOnlyNewProducts() {
-    this.product.getOnlyNewProducts().subscribe((data) => {
-      this.foodProducts = data;
-    });
+    this.isLoading = true;
+    this.product.getOnlyNewProducts().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
   }
 
+  // *----------------------Add to Cart ----------------------
   addToCart(item: FoodProduct) {
-    this.AddToCardService.addtoCart(item);
+    if (!this.AddToCardService.itemInCart(item)) {
+      item.qtyTotal = 1;
+      this.AddToCardService.addToCart(item);
+      this.items = [...this.AddToCardService.getItems()];
+    }
+  }
+
+  // *----------------------Search box----------------------
+  searchProduct(search: any) {
+    console.log(search);
+  }
+
+  ngOnInit() {
+    this.isLoading = true;
+    // *---------------getting Fruit Category from Product service-----------------------
+    this.product.getFruitCategories().subscribe(
+      (data) => {
+        this.fruitCategory = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+
+    // *---------------getting Drink Category from Product service-----------------------
+
+    this.product.getDrinkCategories().subscribe(
+      (data) => {
+        this.drinkCategory = data;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+
+    // *---------------getting All DATA  from Product service-----------------------
+    this.product.getFoodProducts().subscribe(
+      (data) => {
+        this.foodProducts = data;
+        this.isGetProducts = false;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.log(error, 'Something went wrong');
+      }
+    );
+
+    // * add to cart
+
+    this.AddToCardService.loadCart();
+    this.items = this.AddToCardService.getItems();
   }
 }

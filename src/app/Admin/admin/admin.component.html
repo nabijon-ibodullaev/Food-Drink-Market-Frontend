@@ -6,43 +6,16 @@
           <i class="fa-solid fa-square-xmark fa-2x"></i>
         </span>
       </p>
-      <mat-list-item
-        ><a routerLink="/admin"
-          ><i class="fa-solid fa-user"></i> Admin Panel</a
-        ></mat-list-item
-      >
-      <mat-list-item
-        ><a routerLink="/admin-products"
-          ><i class="fa-solid fa-basket-shopping"></i> Products</a
-        ></mat-list-item
-      >
-      <mat-divider></mat-divider>
-      <mat-list-item>
-        <a routerLink="/admin-users"><i class="fa-solid fa-users"></i> Users</a>
+      <mat-list-item><a routerLink="/admin/admin"><i class="fa-solid fa-user"></i> Admin Panel</a></mat-list-item>
+      <mat-list-item><a routerLink="/admin/admin-product"><i class="fa-solid fa-basket-shopping"></i> Products</a>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item
-        ><a routerLink="/admin-banner"
-          ><i class="fa-solid fa-images"></i> Banners</a
-        ></mat-list-item
-      >
-      <mat-divider></mat-divider>
       <mat-list-item>
-        <a routerLink="/admin-sale-products"
-          ><i class="fa-solid fa-gift"></i> Sale Products
-        </a></mat-list-item
-      >
+        <a routerLink="/admin/admin-user"><i class="fa-solid fa-users"></i> Users</a>
+      </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item
-        ><a routerLink="/admin-news"
-          ><i class="fa-solid fa-square-rss"></i> News</a
-        ></mat-list-item
-      ><mat-divider></mat-divider>
-      <mat-list-item
-        ><a routerLink="/admin-blog"
-          ><i class="fa-solid fa-message"></i> Blog</a
-        ></mat-list-item
-      >
+      <mat-list-item><a routerLink="/admin/admin-banner"><i class="fa-solid fa-images"></i> Banners</a></mat-list-item>
+      <mat-divider></mat-divider>
     </mat-list>
   </mat-sidenav>
   <div class="grid-container">
@@ -59,14 +32,8 @@
       <form action="">
         <div class="form-group">
           <div class="input-group">
-            <input
-              type="search"
-              name="search"
-              id="search"
-              class="form-control"
-              placeholder="Search"
-              aria-describedby="helpId"
-            />
+            <input type="search" name="search" id="search" class="form-control" placeholder="Search"
+              aria-describedby="helpId" />
             <button class="btn btn-danger btn-sm px-3">
               <i class="fas fa-search"></i>
             </button>
@@ -79,11 +46,7 @@
       <div class="row">
         <div class="col-md-8">
           <h2 class="text-center text-uppercase text-danger">Daily Purchase</h2>
-          <div
-            echarts
-            [options]="chartOption"
-            class="demo-chart bg-white"
-          ></div>
+          <div echarts [options]="chartOption" class="demo-chart bg-white"></div>
         </div>
         <div class="col-md-4">
           <h2 class="text-center text-uppercase text-danger">Users Online</h2>
@@ -92,12 +55,7 @@
               <div class="cart-chart">
                 <h1 class="fw-bold text-success">TOTAL USERS</h1>
                 <div class="d-flex align-items-center justify-content-between">
-                  <img
-                    src="../../../assets/admin/growth-chart.png"
-                    class="img-fluid opacity-75"
-                    width="100px"
-                    alt=""
-                  />
+                  <img src="../../../assets/admin/growth-chart.png" class="img-fluid opacity-75" width="100px" alt="" />
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <h1 class="fw-bold text-card opacity-75">
                     {{ _TOTAL_USERS }}
@@ -111,12 +69,8 @@
               <div class="cart-chart">
                 <h1 class="fw-bold text-success">FOODS AMOUNT</h1>
                 <div class="d-flex align-items-center justify-content-between">
-                  <img
-                    src="../../../assets/admin/analytics.png"
-                    class="img-fluid opacity-75"
-                    width="100px"
-                    alt=""
-                  />
+                  <img src="../../../assets/admin/analytics.png" class="img-fluid opacity-75 image" width="100px"
+                    alt="" />
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <h1 class="fw-bold text-card opacity-75 text-danger">
                     {{ _TOTAL_AMOUNT | currency: "USD" }}

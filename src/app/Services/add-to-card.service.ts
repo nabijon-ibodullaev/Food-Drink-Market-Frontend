@@ -7,42 +7,40 @@ import { FoodProduct } from '../Models/food-product';
 })
 export class AddToCardService {
   constructor() {}
-  products: FoodProduct[] = [];
-  public productList = new BehaviorSubject<any>([]);
+  items: FoodProduct[] = [];
 
-  getProducts() {
-    return this.productList.asObservable();
-  }
-  setProduct(product: any) {
-    this.products.push(...product);
-    this.productList.next(product);
+  addToCart(addedItem: FoodProduct) {
+    this.items.push(addedItem);
+
+    this.saveCart();
   }
 
-  addtoCart(product: any) {
-    this.products.push(product);
-    this.productList.next(this.products);
-    this.getTotalPrice();
-    localStorage.setItem('cart', JSON.stringify(this.products));
+  getItems() {
+    return this.items;
   }
 
-  getTotalPrice(): number {
-    let grandTotal = 0;
-    this.products.map((a: any) => {
-      grandTotal += a.price;
-    });
-    return grandTotal;
-  }
-  removeCardItem(product: any) {
-    this.products.map((a: any, index: any) => {
-      if (product._id === a._id) {
-        this.products.splice(index, 1);
-        this.getTotalPrice();
-      }
-    });
+  loadCart() {
+    this.items = JSON.parse(localStorage.getItem('cart')!) ?? [];
   }
 
-  removeAllCart() {
-    this.products = [];
-    this.productList.next(this.products);
+  saveCart(): void {
+    localStorage.setItem('cart', JSON.stringify(this.items));
+  }
+
+  clearCart() {
+    this.items = [];
+    localStorage.removeItem('cart');
+  }
+
+  removeItem(item: FoodProduct) {
+    const index = this.items.findIndex((o) => o._id === item._id);
+
+    if (index > -1) {
+      this.items.splice(index, 1);
+      this.saveCart();
+    }
+  }
+  itemInCart(item: FoodProduct): boolean {
+    return this.items.findIndex((o) => o._id === item._id) > -1;
   }
 }

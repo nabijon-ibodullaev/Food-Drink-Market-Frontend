@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaderResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FoodProduct } from '../Models/food-product';
 import { ProductCategories } from '../Models/product-categories';
-
+import { HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
@@ -37,8 +37,8 @@ export class ProductService {
     return this.http.get<FoodProduct[]>('http://localhost:3000/api/foods');
   }
 
-  newProduct(food: FoodProduct): Observable<FoodProduct> {
-    return this.http.post<FoodProduct>('http://localhost:3000/api/foods', food);
+  newProduct(food: FoodProduct): Observable<any> {
+    return this.http.post('http://localhost:3000/api/foods', food);
   }
 
   getOnlyFruits(): Observable<FoodProduct[]> {
